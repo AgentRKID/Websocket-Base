@@ -1,0 +1,52 @@
+plugins {
+    id 'idea'
+    id 'java'
+    id 'maven-publish'
+    id 'org.jetbrains.kotlin.jvm' version '1.3.61'
+    id 'com.github.johnrengelman.shadow' version '5.2.0'
+}
+
+// Change Group please.
+group 'org.example.server'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.3.61'
+    compile 'org.java-websocket:Java-WebSocket:1.4.0'
+    compile 'io.netty:netty-all:4.0.10.Final'
+    compile 'com.google.guava:guava:30.1.1-jre'
+}
+
+compileKotlin {
+    kotlinOptions.jvmTarget = "1.8"
+}
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+idea {
+    module {
+        downloadJavadoc = true
+        downloadSources = true
+    }
+}
+
+shadowJar {
+    classifier = null
+    exclude '**/*.kotlin_metadata'
+//    exclude '**/*.kotlin_module'
+    exclude '**/*.kotlin_builtins'
+    archiveFileName = "webserver-${version}.jar"
+}
+
+publishing {
+    publications {
+        shadow(MavenPublication) { publication ->
+            project.shadow.component(publication)
+        }
+    }
+}
