@@ -27,10 +27,10 @@ abstract class WSPacket {
     abstract fun process(conn: WebSocket?, netHandler: WSNetHandler)
 
     companion object {
-        val REGISTRY: BiMap<Class<WSPacket>, Int> = HashBiMap.create()
+        val REGISTRY: BiMap<Class<out WSPacket>, Int> = HashBiMap.create()
 
         init {
-            REGISTRY.put(WSPacketExample.javaClass, 1)
+            REGISTRY[WSPacketExample::class.java] = 1
         }
     }
 }

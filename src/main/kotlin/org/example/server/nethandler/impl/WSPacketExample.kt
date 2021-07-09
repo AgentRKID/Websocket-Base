@@ -5,7 +5,7 @@ import org.example.server.nethandler.WSNetHandler
 import org.example.server.nethandler.WSPacket
 import org.java_websocket.WebSocket
 
-object WSPacketExample : WSPacket() {
+class WSPacketExample : WSPacket() {
 
     override fun write(wrapper: ByteBufWrapper?) {
         wrapper?.writeString("Hello, World!")
